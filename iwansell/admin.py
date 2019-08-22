@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from .models import Listing, Channel, Thread, Comment, Reply, Account,Category, Media, Product, Campus,EShopCategory, EShop, Sponsored, Trending, Messenger,EHaggler, Blog, SubCategory, PaymentMethod
+from .models import Listing, Channel, Thread, Comment, Reply, Reply1, Reply2, Reply3, Reply4, Account,Category, Media, Product, Campus,EShopCategory, EShop, Sponsored, Trending, Messenger,EHaggler, Blog, SubCategory, PaymentMethod
 from django.contrib import admin
 
 # Register your models here.
@@ -23,3 +23,7 @@ admin.site.register(Channel)
 admin.site.register(Thread)
 admin.site.register(Comment)
 admin.site.register(Reply)
+admin.site.register(Reply1)
+admin.site.register(Reply2)
+admin.site.register(Reply3)
+admin.site.register(Reply4)
