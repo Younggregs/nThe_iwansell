@@ -132,7 +132,7 @@ class ResultListSerializer(serializers.Serializer):
 class TrendSerializer(serializers.ModelSerializer):
 
    class Meta:
-        model = Trending
+        model = Product
         fields = ['id', 'product_image', 'product_name', 'starting_price']
 
 
