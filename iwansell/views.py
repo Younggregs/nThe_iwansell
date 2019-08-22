@@ -12,7 +12,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render , redirect, get_object_or_404
 from django.contrib.auth import authenticate , login
 from django.http import JsonResponse
-from django_random_queryset import RandomManager
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
