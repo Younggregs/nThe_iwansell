@@ -851,7 +851,7 @@ class Reply1(models.Model):
     date = models.DateTimeField(default = timezone.now)
     
     def __str__(self):
-        return self.reply
+        return self.reply_t
 
     
     class Meta:
