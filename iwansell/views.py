@@ -266,6 +266,7 @@ class AddAccount(APIView):
 
             try:
 
+                User.objects.get(username = phone)
                 Account.objects.get(phone = phone)
 
                 error_message = 'Oops an account with that username already exist'
@@ -6838,7 +6839,7 @@ class ForgotPasswordView(APIView):
             new_reset.email = email
             new_reset.save()
 
-            message = 'Hey dear! You are nearly done with your password reset process, Follow this link to reset your password http://127.0.0.1:3000/reset_password/' +  str(reset_code) + ' You have done well'
+            message = 'Hey dear! You are nearly done with your password reset process, Follow this link to reset your password https://www.iwansell.com/reset_password/' +  str(reset_code) + ' You have done well'
             email = EmailMessage('Your password reset details from Iwansell', message, to=[email])
             email.send()
 
