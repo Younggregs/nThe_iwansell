@@ -7146,7 +7146,7 @@ class ThreadView(APIView):
         media = request.FILES.getlist("files", "")
       
         if True:
-            account = Account.objects.get(id=5)
+            account = get_account(request)
             channel = Channel.objects.get(account_id = account.id)
             campus = Campus.objects.get(id = account.campus_id)
 
@@ -7374,7 +7374,7 @@ class CommentView(APIView):
        
       
         if True:
-            account = Account.objects.get(id=5)
+            account = get_account(request)
             thread = Thread.objects.get(id = thread_id)
 
             newComment = Comment()
@@ -7480,7 +7480,7 @@ class ReplyView(APIView):
        
       
         if True:
-            account = Account.objects.get(id=5)
+            account = get_account(request)
             comment = Comment.objects.get(id = comment_id)
 
             newReply = Reply()
@@ -7569,7 +7569,7 @@ class Reply1View(APIView):
        
       
         if True:
-            account = Account.objects.get(id=5)
+            account = get_account(request)
             reply = Reply.objects.get(id = reply_id)
 
             newReply = Reply1()
@@ -7668,7 +7668,7 @@ class Reply2View(APIView):
        
       
         if True:
-            account = Account.objects.get(id=5)
+            account = get_account(request)
             reply1 = Reply1.objects.get(id = reply_id)
 
             newReply = Reply2()
@@ -7770,7 +7770,7 @@ class Reply3View(APIView):
        
       
         if True:
-            account = Account.objects.get(id=5)
+            account = get_account(request)
             reply2 = Reply2.objects.get(id = reply_id)
 
             newReply = Reply3()
@@ -7871,7 +7871,7 @@ class Reply4View(APIView):
        
       
         if True:
-            account = Account.objects.get(id=5)
+            account = get_account(request)
             reply3 = Reply3.objects.get(id = reply_id)
 
             newReply = Reply4()
