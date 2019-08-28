@@ -3,6 +3,7 @@ from django.views import generic
 from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import check_password , make_password
 from django.views.generic.edit import FormView
 from django.core.mail import EmailMessage
 from django.core import serializers
