@@ -8360,6 +8360,41 @@ class GetChannel(APIView):
 
 
 
+class HasChannel(APIView):
+
+    def get(self,request):
+        
+        status = False
+        
+        try:
+            account = get_account(request)
+            account_id = account.id
+
+            channel = Channel.objects.get(account_id = account_id)
+            status = True
+
+        except:
+
+            pass
+
+
+        return Response(status)
+    
+
+    
+    def post(self, request):
+        pass
+
+
+
+
+
+
+
+
+
+
+
 
 
 

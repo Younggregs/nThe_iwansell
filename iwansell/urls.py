@@ -284,6 +284,9 @@ urlpatterns = [
     #iwansell/get_channel
     url(r'^get_channel/$',views.GetChannel.as_view(), name = 'getchannel'),
 
+    #iwansell/has_channel
+    url(r'^has_channel/$',views.HasChannel.as_view(), name = 'has-channel'),
+    
     #iwansell/thread
     url(r'^thread/(?P<thread_id>[0-9]+)/$',views.ThreadView.as_view(), name = 'thread'),
 
