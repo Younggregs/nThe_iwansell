@@ -2221,6 +2221,7 @@ class RemoveListing(APIView):
 
     def get(self, request, product_id, status):
         
+        toggle = False
         try:
             listing = Listing.objects.get(id = product_id)
             
@@ -2230,15 +2231,18 @@ class RemoveListing(APIView):
                 listing.success = True
 
             listing.save()
+            toggle = True
 
         except:
             pass
 
-        return Response(True)
+        return Response(toggle)
 
     
     def post(self, request, product_id, status):
         pass
+
+
 
 
 
@@ -2615,12 +2619,12 @@ class Search(APIView):
 
             if category_id != '99' :
 
-                buffer_result =  Product.objects.filter(product_name__icontains = word,category_id=category_id, campus_id = campus_id, sold = False) | Product.objects.filter(description__icontains = word, category_id=category_id, campus_id = campus_id, sold = False) 
+                buffer_result =  Product.objects.filter(product_name__icontains = word,category_id=category_id, campus_id = campus_id, sold = False, removed=False) | Product.objects.filter(description__icontains = word, category_id=category_id, campus_id = campus_id, sold = False, removed=False) 
                 
             
             else:
              
-                buffer_result = Product.objects.filter(product_name__icontains = word, campus_id = campus_id, sold = False) | Product.objects.filter(description__icontains = word, campus_id = campus_id, sold = False)
+                buffer_result = Product.objects.filter(product_name__icontains = word, campus_id = campus_id, sold = False, removed=False) | Product.objects.filter(description__icontains = word, campus_id = campus_id, sold = False, removed=False)
        
 
             result_bucket.append(buffer_result)
@@ -4353,13 +4357,13 @@ class EShopListCategory(APIView):
     def get(self, request, campus_id, category_id):
 
         if category_id == '99':
-            eshoplist = EShop.objects.all()
+            eshoplist = EShop.objects.filter(campus_id = campus_id)
 
             serializer = EShopSerializer(eshoplist, many=True)
             return Response(serializer.data)
 
         else:
-            eshoplist = EShopCategory.objects.filter(category = category_id)
+            eshoplist = EShopCategory.objects.filter(category = category_id, campus_id = campus_id)
 
             bucketlist = []
             for eshop in eshoplist:
@@ -4412,7 +4416,7 @@ class EShopList(APIView):
 
     def get(self, request, campus_id):
         
-        eshoplist = EShop.objects.all()
+        eshoplist = EShop.objects.filter(campus_id = campus_id)
 
         serializer = EShopSerializer(eshoplist, many = True)
 
@@ -4424,7 +4428,7 @@ class EShopList(APIView):
         
         eshop_name = request.POST.get("eshop_name","")
 
-        eshoplist = EShop.objects.filter(name__icontains = eshop_name)
+        eshoplist = EShop.objects.filter(name__icontains = eshop_name, campus_id = campus_id)
 
         serializer = EShopSerializer(eshoplist, many = True)
 
@@ -5279,35 +5283,34 @@ class SoldProduct(APIView):
 
 
 
-class RemovedProduct(APIView):
+class RemoveProduct(APIView):
 
-    def get(self, request, product_id):
+    def get(self, request, product_id, status):
 
-        removed = False
-        
-        try :
+        toggle = False
+
+        try:
             product = Product.objects.get(id = product_id)
-        except: 
-             return Response(status=status.HTTP_404_NOT_FOUND)
+            
 
-        if product.removed :
-            product.removed = False
-            product.save()
-        
-
-        else:
+            if status == '1':
+                product.sold = True
+            
             product.removed = True
             product.save()
-            sold = True
+            toggle = True
 
+        except:
+            pass
 
-        return Response(removed)
+        return Response(toggle)
 
 
 
     
-    def post(self, request, eshop_id):
+    def post(self, request, product_id, status):
         pass
+
 
 
 

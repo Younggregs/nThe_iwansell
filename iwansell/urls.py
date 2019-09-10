@@ -17,6 +17,9 @@ urlpatterns = [
     #iwansell/signin
     url(r'^signin/$',views.SignIn.as_view(), name = 'sign-in'),
 
+    #iwansell/verify_phone
+    url(r'^verify_phone/$',views.VerifyPhone.as_view(), name = 'verify-phone'),
+
     #iwansell/600
     url(r'^accounts/(?P<account_id>[0-9]+)/$',views.AccountDetail.as_view(), name = 'account-detail'),
 
@@ -219,7 +222,7 @@ urlpatterns = [
     url(r'^sold_product/(?P<product_id>[0-9]+)/$',views.SoldProduct.as_view(), name = 'sold-product'),
 
     #iwansell/removeproduct
-    url(r'^remove_product/(?P<product_id>[0-9]+)/$',views.RemovedProduct.as_view(), name = 'remove-product'),
+    url(r'^remove_product/(?P<product_id>[0-9]+)/(?P<status>[0-9]+)/$',views.RemoveProduct.as_view(), name = 'remove-product'),
 
     #iwansell/favorite/status_code/id
     url(r'^favorite/(?P<status_code>[0-9]+)/(?P<id>[0-9]+)/$',views.FavoriteView.as_view(), name = 'favorite'),
@@ -286,7 +289,7 @@ urlpatterns = [
 
     #iwansell/has_channel
     url(r'^has_channel/$',views.HasChannel.as_view(), name = 'has-channel'),
-    
+
     #iwansell/thread
     url(r'^thread/(?P<thread_id>[0-9]+)/$',views.ThreadView.as_view(), name = 'thread'),
 
