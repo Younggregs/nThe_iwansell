@@ -481,8 +481,8 @@ class VerifyPhone(APIView):
         code = verify_phone_code_generator()
         body = 'Iwansell Verification Code is ' + code + '.'
 
-        account_sid = 'AC2bcd4d75d82b3ffb0dee838ba679b31b'
-        auth_token = '9ae31e9f78963cb906cf5ef069785aa5'
+        account_sid = ''
+        auth_token = ''
         client = Client(account_sid, auth_token)
 
         message = client.messages \
