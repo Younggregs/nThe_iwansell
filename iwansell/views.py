@@ -17,6 +17,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Account, AlternatePhone, Category, Media, Product, Campus, Sponsored, EHaggler, Messenger, EShop, SubCategory, EShopProduct, EShopCategory, RateReview, ClientRateReview, EShopRateReview, FavoriteClient, FavoriteProduct, FavoriteEShop, Trending, Blog, ForgotPassword, PaymentMethod, Transaction, Sold, NotFound, TopSearched, TopForSell, Listing, Thread, Channel, Following, ThreadVote, Comment, Reply, Reply1, Reply2, Reply3, Reply4, CommentVote, ReplyVote, Reply1Vote, Reply2Vote, Reply3Vote, Reply4Vote
 from .serializers import AccountSerializer, AlternatePhoneSerializer, AddAccountSerializer,SignInSerializer, CategorySerializer, ResultListSerializer,CampusSerializer, TrendSerializer, SponsoredSerializer, ProductSerializer,MessageSerializer, HaggleClientSerializer, EShopSerializer, EShopExistSerializer, SubCategorySerializer, ClientRRSerializer, EShopRRSerializer, ProductImagesSerializer, ProductVideoSerializer, EShopStoreSerializer, ForgotPasswordSerializer, ErrorCheckSerializer, SuccessCodeSerializer, FavoriteListClient, FavoriteListEShop, FavoriteListProduct, ProductSnippetSerializer, AboutEShopSerializer, BlogSerializer, EShopCategorySerializer, PaymentMethodSerializer, TransactionSerializer, BuyerSerializer, ReceiptSerializer, BusinessSerializer, ProductValuationSerializer, ListingSerializer, ListingProductSerializer, ThreadSerializer, CommentSerializer, ReplySerializer
+from twilio.rest import Client
 import random
 import string
 import tweepy
@@ -153,6 +154,19 @@ def reset_code_generator(size=16, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
+
+
+
+
+
+
+
+
+
+
+def verify_phone_code_generator(size=5, chars=string.digits):
+
+    return ''.join(random.choice(chars) for _ in range(size))
 
 
 
@@ -438,6 +452,47 @@ class SignIn(APIView):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class VerifyPhone(APIView):
+
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        
+        phone = request.POST.get("phone", "")
+        phone = '+234' + phone
+        code = verify_phone_code_generator()
+        body = 'Iwansell Verification Code is ' + code + '.'
+
+        account_sid = 'AC2bcd4d75d82b3ffb0dee838ba679b31b'
+        auth_token = '9ae31e9f78963cb906cf5ef069785aa5'
+        client = Client(account_sid, auth_token)
+
+        message = client.messages \
+                .create(
+                    body = body,
+                    from_ = '+18084197959',
+                    to = phone
+                 )
+
+        return Response(message.sid)
 
 
 
