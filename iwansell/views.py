@@ -1646,7 +1646,7 @@ class SubCategoryProduct(APIView):
             else:
                 subcategory = SubCategory.objects.get(id = subcategory_id)
                 category_id = subcategory.category_id
-                product = Product.objects.filter(category_id = category_id)[:21]
+                product = Product.objects.filter(category_id = category_id, sold = False, removed=False)[:21]
 
             serializer = ProductSnippetSerializer(product, many=True)
             return Response( serializer.data )
@@ -1858,17 +1858,17 @@ class CategoryProduct(APIView):
 
         if show_more == '1':
             if category_id == '99' :
-                product = Product.objects.filter(campus_id = campus_id)[:9]
+                product = Product.objects.filter(campus_id = campus_id, sold = False, removed=False)[:9]
 
             else: 
-                product = Product.objects.filter(campus_id = campus_id, category_id = category_id)[:9]
+                product = Product.objects.filter(campus_id = campus_id, category_id = category_id, sold = False, removed=False)[:9]
 
         else:
             if category_id == '99' :
-                product = Product.objects.filter(campus_id = campus_id)[:21]
+                product = Product.objects.filter(campus_id = campus_id, sold = False, removed=False)[:21]
 
             else: 
-                product = Product.objects.filter(campus_id = campus_id, category_id = category_id)[:21]
+                product = Product.objects.filter(campus_id = campus_id, category_id = category_id, sold = False, removed=False)[:21]
     
         serializer = ProductSnippetSerializer(product, many=True)
         return Response(serializer.data)
@@ -2829,7 +2829,7 @@ class TrendingView(APIView):
 
         try:
             category = Category.objects.get(url_name = trending_url)
-            trending = Product.objects.filter(category_id = category.id, campus_id = campus_id)[:8] 
+            trending = Product.objects.filter(category_id = category.id, campus_id = campus_id, sold = False, removed=False)[:8] 
 
             serializer = TrendSerializer(trending, many=True)
 
@@ -2988,6 +2988,70 @@ class ProductView(APIView):
 
 
 
+
+
+
+
+
+
+
+
+
+
+class ProductAccompliceView(APIView):
+
+    def get(self, request, product_id, campus_id ):
+        
+        product_name = ''
+        try: 
+            p = Product.objects.get(id = product_id)
+            product_name = p.product_name
+        except:
+            nought = []
+            return Response(nought)
+
+        search_phrase = product_name
+        search_bucket = search_phrase.split()
+
+        results = []
+        result_bucket = []
+
+        for word in search_bucket :
+
+            buffer_result = Product.objects.filter(product_name__icontains = word, campus_id = campus_id, sold = False, removed=False) | Product.objects.filter(description__icontains = word, campus_id = campus_id, sold = False, removed=False)
+            
+            result_bucket.append(buffer_result)
+
+         
+        result_bucket = result_bucket[:8]
+        for buffer in result_bucket :
+
+            for item in buffer :
+                
+
+                product_id = item.id
+                product_name = item.product_name
+                product_image = item.product_image
+                starting_price = item.starting_price
+
+                context_list = {
+                    'product_id': product_id,
+                    'product_name': product_name,
+                    'product_image' : product_image,
+                    'starting_price' : starting_price,
+                }
+
+                results.append(context_list)
+
+               
+
+        serializer = ResultListSerializer(results, many=True)
+
+        return Response(serializer.data)
+
+
+    def post(self, request, product_id):
+        pass
 
 
 

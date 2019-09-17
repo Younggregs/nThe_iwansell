@@ -167,6 +167,9 @@ urlpatterns = [
     #iwansell/product
     url(r'^product/(?P<product_id>[0-9]+)/$',views.ProductView.as_view(), name = 'product'),
 
+    #iwansell/product_accomplice/
+    url(r'^product_accomplice/(?P<product_id>\w+)/(?P<campus_id>[0-9]+)/$',views.ProductAccompliceView.as_view(), name = 'product-accomplice'),
+
     #iwansell/haggleclients
     url(r'^haggleclients/$',views.HaggleClients.as_view(), name = 'haggle-clients'),
 
