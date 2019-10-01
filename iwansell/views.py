@@ -528,6 +528,7 @@ class VerifyPhone(APIView):
 
 
 
+
 class AccountDetail(APIView):
 
     def get(self,request,account_id):
@@ -3837,6 +3838,9 @@ class NewEShop(APIView):
             account = get_account(request)
             account_id = account.id
 
+            campus_id = account.campus
+            campus = Campus.objects.get(id = campus_id)
+
             category = request.POST.getlist("category","")
             name = request.POST.get("eshop_name","")
             about = request.POST.get("about","")
@@ -3885,6 +3889,7 @@ class NewEShop(APIView):
                 eshop.account = account
                 eshop.name = name
                 eshop.about = about
+                eshop.campus = campus
                 eshop.save()
 
 
