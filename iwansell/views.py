@@ -3838,7 +3838,7 @@ class NewEShop(APIView):
             account = get_account(request)
             account_id = account.id
 
-            campus_id = account.campus
+            campus_id = account.campus_id
             campus = Campus.objects.get(id = campus_id)
 
             category = request.POST.getlist("category","")
