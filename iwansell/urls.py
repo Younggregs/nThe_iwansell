@@ -11,6 +11,9 @@ urlpatterns = [
     #iwansell/
     url(r'^$',views.index, name = 'index'),
 
+    #iwansell/app_review
+    url(r'^app_review/$',views.AppReview.as_view(), name = 'app-review'),
+
     #iwansell/accounts
     url(r'^accounts/$',views.AddAccount.as_view(), name = 'add-account'),
 

@@ -3,6 +3,14 @@ from .models import Account, AlternatePhone, Category, SubCategory, Campus, Spon
 
 
 
+class AppReviewSerializer(serializers.Serializer):
+
+    no_account = serializers.CharField()
+    no_product = serializers.CharField()
+    no_eshop = serializers.CharField()
+
+
+
 
 
 class AccountSerializer(serializers.ModelSerializer):

@@ -16,7 +16,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Account, AlternatePhone, Category, Media, Product, Campus, Sponsored, EHaggler, Messenger, EShop, SubCategory, EShopProduct, EShopCategory, RateReview, ClientRateReview, EShopRateReview, FavoriteClient, FavoriteProduct, FavoriteEShop, Trending, Blog, ForgotPassword, PaymentMethod, Transaction, Sold, NotFound, TopSearched, TopForSell, Listing, Thread, Channel, Following, ThreadVote, Comment, Reply, Reply1, Reply2, Reply3, Reply4, CommentVote, ReplyVote, Reply1Vote, Reply2Vote, Reply3Vote, Reply4Vote
-from .serializers import AccountSerializer, AlternatePhoneSerializer, AddAccountSerializer,SignInSerializer, CategorySerializer, ResultListSerializer,CampusSerializer, TrendSerializer, SponsoredSerializer, ProductSerializer,MessageSerializer, HaggleClientSerializer, EShopSerializer, EShopExistSerializer, SubCategorySerializer, ClientRRSerializer, EShopRRSerializer, ProductImagesSerializer, ProductVideoSerializer, EShopStoreSerializer, ForgotPasswordSerializer, ErrorCheckSerializer, SuccessCodeSerializer, FavoriteListClient, FavoriteListEShop, FavoriteListProduct, ProductSnippetSerializer, AboutEShopSerializer, BlogSerializer, EShopCategorySerializer, PaymentMethodSerializer, TransactionSerializer, BuyerSerializer, ReceiptSerializer, BusinessSerializer, ProductValuationSerializer, ListingSerializer, ListingProductSerializer, ThreadSerializer, CommentSerializer, ReplySerializer
+from .serializers import AccountSerializer, AlternatePhoneSerializer, AddAccountSerializer,SignInSerializer, CategorySerializer, ResultListSerializer,CampusSerializer, TrendSerializer, SponsoredSerializer, ProductSerializer,MessageSerializer, HaggleClientSerializer, EShopSerializer, EShopExistSerializer, SubCategorySerializer, ClientRRSerializer, EShopRRSerializer, ProductImagesSerializer, ProductVideoSerializer, EShopStoreSerializer, ForgotPasswordSerializer, ErrorCheckSerializer, SuccessCodeSerializer, FavoriteListClient, FavoriteListEShop, FavoriteListProduct, ProductSnippetSerializer, AboutEShopSerializer, BlogSerializer, EShopCategorySerializer, PaymentMethodSerializer, TransactionSerializer, BuyerSerializer, ReceiptSerializer, BusinessSerializer, ProductValuationSerializer, ListingSerializer, ListingProductSerializer, ThreadSerializer, CommentSerializer, ReplySerializer, AppReviewSerializer
 from twilio.rest import Client
 import random
 import string
@@ -225,6 +225,66 @@ def get_account(request):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class AppReview(APIView):
+
+    def get(self, request):
+        
+        campus_list = Campus.objects.all()
+
+        review = []
+
+        for campus in campus_list :
+
+            no_account = Account.objects.filter(campus = campus.id).count
+            no_product = Product.objects.filter(campus = campus.id).count
+            no_eshop = EShop.objects.filter(campus = campus.id).count
+
+            register = {
+                'no_account': no_account,
+                'no_product': no_product,
+                'no_eshop': no_eshop
+            }
+
+            review.append(register)
+
+        
+        serializer = AppReviewSerializer(review, many=True)
+        
+        return Response(serializer.data)
+
+
+
+    def post(self, request):
+        pass
 
 
 
