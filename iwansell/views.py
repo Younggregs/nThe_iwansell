@@ -267,8 +267,10 @@ class AppReview(APIView):
             no_account = Account.objects.filter(campus = campus.id).count
             no_product = Product.objects.filter(campus = campus.id).count
             no_eshop = EShop.objects.filter(campus = campus.id).count
+            
 
             register = {
+                'campus': campus.campus,
                 'no_account': no_account,
                 'no_product': no_product,
                 'no_eshop': no_eshop
